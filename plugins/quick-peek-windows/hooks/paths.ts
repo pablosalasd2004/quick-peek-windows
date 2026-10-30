@@ -73,11 +73,15 @@ export function resolve (target: string, cwd: string, home: string | undefined) 
   } else if (!path.startsWith('/')) {
     path = `${cwd}/${path}`
   }
+  // On Windows the folder starts with a drive (`C:\Users\ana`): fold `\` and `/` alike and keep
+  // the drive, instead of writing `/C:\Users\ana/...` that no file lives at.
+  const drive = /^([A-Za-z]:)[\\/]/.exec(path)?.[1]
+  if (drive) path = path.slice(drive.length).replaceAll('\\', '/')
   const parts: string[] = []
   for (const part of path.split('/')) {
     if (part === '' || part === '.') continue
     if (part === '..') parts.pop()
     else parts.push(part)
   }
-  return `/${parts.join('/')}`
+  return drive ? `${drive}\\${parts.join('\\')}` : `/${parts.join('/')}`
 }

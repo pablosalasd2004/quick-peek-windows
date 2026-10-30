@@ -1,6 +1,6 @@
 {
   "name": "quick-peek-windows",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Quick Peek with a Windows fix: clicking a path now selects the file in Explorer. Fork of midudev's quick-peek.",
   "author": {
     "name": "Miguel Ángel Durán (midudev)",
