@@ -316,8 +316,9 @@ function swap (drawn: RenderElement, mine: RenderElement): RenderElement {
 
 /**
  * Explorer's command line for a Windows path. Explorer wants `/select,"C:\a b\c"` with the quotes
- * around the path only, which an argument list cannot say once a path holds a space, so
- * PowerShell starts it with the line written whole (sent encoded, so nothing is quoted twice).
+ * around the path only, which an argument list cannot say once a path holds a space. The fast way
+ * is `hooks/reveal.js` under Windows Script Host (about 270 ms); this is the fallback: PowerShell
+ * starts it with the line written whole (sent encoded, so nothing is quoted twice; about 860 ms).
  */
 function explorerCommand (windows: string, isOpening: boolean) {
   const line = isOpening ? `"${windows}"` : `/select,"${windows}"`
@@ -342,7 +343,9 @@ async function reveal ($: Engine, path: string, isOpening: boolean) {
   }
   if (system === 'windows') {
     const windows = path.replaceAll('/', '\\')
-    await run(explorerCommand(windows, isOpening))
+    const script = `${$.plugin.root}\\hooks\\reveal.js`.replaceAll('/', '\\')
+    const done = await run(['wscript.exe', '//B', '//Nologo', script, windows, ...(isOpening ? ['open'] : [])])
+    if (done?.exitCode !== 0) await run(explorerCommand(windows, isOpening))
     return
   }
   if (isOpening) {

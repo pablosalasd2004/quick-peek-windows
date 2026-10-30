@@ -12,7 +12,7 @@
       "name": "quick-peek-windows",
       "source": "./plugins/quick-peek-windows",
       "description": "Quick Peek with a Windows fix: clicking a path now selects the file in Explorer. Fork of midudev's quick-peek.",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "category": "productivity"
     }
   ]
