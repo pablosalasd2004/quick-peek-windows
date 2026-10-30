@@ -1,7 +1,7 @@
 {
   "name": "quick-peek-windows",
-  "version": "0.2.1",
-  "description": "Quick Peek with a Windows fix: clicking a path with spaces now selects the file in Explorer. Fork of midudev's quick-peek.",
+  "version": "0.2.2",
+  "description": "Quick Peek with a Windows fix: clicking a path now selects the file in Explorer. Fork of midudev's quick-peek.",
   "author": {
     "name": "Miguel Ángel Durán (midudev)",
     "url": "https://github.com/midudev"

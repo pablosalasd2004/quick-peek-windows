@@ -1,6 +1,6 @@
 # Quick Peek (Windows fix)
 
-> Fork of [midudev's quick-peek](https://github.com/midudev/better-claude/tree/main/plugins/quick-peek) 0.2.0. The only change: on Windows (and WSL), a click on a path with spaces selects the file in Explorer instead of opening Documents. The text below is the original README.
+> Fork of [midudev's quick-peek](https://github.com/midudev/better-claude/tree/main/plugins/quick-peek) 0.2.0. The only change: on native Windows, a click on a path selects the file in Explorer (it opened Documents or an empty window before). The text below is the original README.
 
 A Claude Code mod: the paths in Claude's replies become links. Hover one and a preview opens by the pointer, a file of code with its lines coloured; click it and Finder opens with the file selected.
 

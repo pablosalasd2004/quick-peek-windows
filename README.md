@@ -4,9 +4,9 @@ A patched fork of **Quick Peek**, the Claude Code mod by [Miguel Ángel Durán (
 
 ## What is different
 
-On Windows, clicking a path that contains a space (for example `C:\Users\Ana Perez\file.md`) opened Explorer on *Documents* with nothing selected. The plugin ran `explorer "/select,C:\Users\Ana Perez\file.md"` as a single argument; when the path has a space, Windows quotes the whole argument and Explorer ignores it.
+On Windows, clicking a path (in practice, any path with a space, such as `C:\Users\Ana Perez\file.md`) did not select the file in Explorer: it opened *Documents* or an empty window. The plugin passes `explorer /select,<path>` to the process API, and the way that API builds the command line does not give Explorer the form it needs, `/select,"C:\a b\c"`.
 
-This fork passes `/select,` and the path as two arguments (`explorer /select, "C:\…"`), which Explorer accepts. The same change is applied to the WSL branch (`explorer.exe`). Nothing else changes. See [`register.tsx`](plugins/quick-peek-windows/hooks/register.tsx) for the diff against upstream.
+This fork starts Explorer through PowerShell (`Start-Process explorer.exe -ArgumentList '/select,"C:\a b\c"'`, sent as `-EncodedCommand` so nothing is quoted twice). Cost: PowerShell's start-up makes the click open a fraction of a second later. Only native Windows is changed; the WSL branch is as upstream and untested here. See [`register.tsx`](plugins/quick-peek-windows/hooks/register.tsx) for the diff against upstream.
 
 The plugin is renamed `quick-peek-windows` so it can be installed next to the original; install only one of them, or paths will be drawn twice.
 

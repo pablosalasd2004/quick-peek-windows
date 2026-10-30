@@ -314,12 +314,25 @@ function swap (drawn: RenderElement, mine: RenderElement): RenderElement {
   return isSwapped ? out : mine
 }
 
+/**
+ * Explorer's command line for a Windows path. Explorer wants `/select,"C:\a b\c"` with the quotes
+ * around the path only, which an argument list cannot say once a path holds a space, so
+ * PowerShell starts it with the line written whole (sent encoded, so nothing is quoted twice).
+ */
+function explorerCommand (windows: string, isOpening: boolean) {
+  const line = isOpening ? `"${windows}"` : `/select,"${windows}"`
+  const script = `Start-Process -FilePath explorer.exe -ArgumentList '${line.replaceAll("'", "''")}'`
+  let bytes = ''
+  for (let i = 0; i < script.length; i++) bytes += String.fromCharCode(script.charCodeAt(i) & 255, script.charCodeAt(i) >> 8)
+  return ['powershell', '-NoProfile', '-NonInteractive', '-EncodedCommand', btoa(bytes)]
+}
+
 /** Shows `path` in the system's file manager, selected; with `isOpening`, opens it instead. */
 async function reveal ($: Engine, path: string, isOpening: boolean) {
   const run = (argv: string[]) => $.process.run(argv).catch(() => undefined)
   if (await wslOf($)) {
     const windows = (await run(['wslpath', '-w', path]))?.stdout.trim()
-    if (windows) await run(isOpening ? ['explorer.exe', windows] : ['explorer.exe', '/select,', windows])
+    if (windows) await run(isOpening ? ['explorer.exe', windows] : ['explorer.exe', `/select,${windows}`])
     return
   }
   const system = await platformOf($)
@@ -329,9 +342,7 @@ async function reveal ($: Engine, path: string, isOpening: boolean) {
   }
   if (system === 'windows') {
     const windows = path.replaceAll('/', '\\')
-    // `/select,` and the path stay two arguments: one `/select,C:\a b\c` gets quoted whole when
-    // the path holds a space, and Explorer then ignores it and opens Documents.
-    await run(isOpening ? ['explorer', windows] : ['explorer', '/select,', windows])
+    await run(explorerCommand(windows, isOpening))
     return
   }
   if (isOpening) {

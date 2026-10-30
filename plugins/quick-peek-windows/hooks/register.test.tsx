@@ -249,5 +249,5 @@ test('under WSL a click selects the path in Explorer', async ($, on) => {
   await ui.pointer({ type: 'down', x: 2, y: 0, button: 'left', in: 'path:0:0' })
   await ui.pointer({ type: 'up', x: 2, y: 0, button: 'left', in: 'path:0:0' })
   await w.clock.settle()
-  expect(w.runs).toContainEqual(['explorer.exe', '/select,', 'C:\\Users\\ana\\videos\\borrador.mp4'])
+  expect(w.runs).toContainEqual(['explorer.exe', '/select,C:\\Users\\ana\\videos\\borrador.mp4'])
 })
