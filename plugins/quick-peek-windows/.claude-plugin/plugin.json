@@ -1,0 +1,29 @@
+{
+  "name": "quick-peek-windows",
+  "version": "0.2.1",
+  "description": "Quick Peek with a Windows fix: clicking a path with spaces now selects the file in Explorer. Fork of midudev's quick-peek.",
+  "author": {
+    "name": "Miguel Ángel Durán (midudev)",
+    "url": "https://github.com/midudev"
+  },
+  "homepage": "https://github.com/pablosalasd2004/quick-peek-windows",
+  "repository": "https://github.com/pablosalasd2004/quick-peek-windows",
+  "license": "MIT",
+  "keywords": [
+    "paths",
+    "files",
+    "explorer",
+    "preview",
+    "hover",
+    "mod",
+    "windows"
+  ],
+  "userConfig": {
+    "window": {
+      "type": "boolean",
+      "title": "Preview in a window",
+      "description": "On macOS, show the preview in a small window by the pointer: the file's Quick Look thumbnail, its kind, size and age. Off, the terminal shows a one-line card over the path.",
+      "default": true
+    }
+  }
+}

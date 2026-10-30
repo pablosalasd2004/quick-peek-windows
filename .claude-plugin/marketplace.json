@@ -1,0 +1,19 @@
+{
+  "name": "quick-peek-windows",
+  "owner": {
+    "name": "Pablo Salas",
+    "url": "https://github.com/pablosalasd2004"
+  },
+  "metadata": {
+    "description": "A Windows fix for Quick Peek, the Claude Code mod by midudev (https://github.com/midudev/better-claude)."
+  },
+  "plugins": [
+    {
+      "name": "quick-peek-windows",
+      "source": "./plugins/quick-peek-windows",
+      "description": "Quick Peek with a Windows fix: clicking a path with spaces now selects the file in Explorer. Fork of midudev's quick-peek.",
+      "version": "0.2.1",
+      "category": "productivity"
+    }
+  ]
+}
